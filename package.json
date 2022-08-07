@@ -21,5 +21,8 @@
   "homepage": "https://github.com/o7lili/team-info-generator#readme",
   "devDependencies": {
     "jest": "^28.1.3"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
   }
 }
