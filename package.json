@@ -1,0 +1,25 @@
+{
+  "name": "team-info-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o7lili/team-info-generator.git"
+  },
+  "author": "o7lili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/o7lili/team-info-generator/issues"
+  },
+  "homepage": "https://github.com/o7lili/team-info-generator#readme",
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
