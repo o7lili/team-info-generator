@@ -1,7 +1,9 @@
 const inquirer = require('inquirer');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer')
+const Intern = require('./lib/Intern');
+// const generateSite = require('./src/generate-site.js');
 // const fs = require('fs');
-// const generateTeam = require('./src/page-template');
-
 // const pageHTML = generateTeam();
 
 // fs.writeFile('./TeamProfiles.html', pageHTML, err => {
@@ -11,7 +13,7 @@ const inquirer = require('inquirer');
 // });
 
 
-const promptUser = () => {
+const promptManager = () => {
     return inquirer.prompt([
         {
             type: 'input',
@@ -65,7 +67,34 @@ const promptUser = () => {
                 }
             }
         }
-    ]);
+    ])
+    .then(answers => {
+        // console.log(answers);
+        promptMenu();
+    })
+};
+
+const promptMenu = () => {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'menu',
+            message: 'Please select a type of employee to add:',
+            choices: ['add an engineer', 'add an intern', 'finish team'],
+        }
+    ])
+    .then(choice => {
+        switch (choice.menu) {
+            case 'add an engineer':
+                promptEngineer();
+                break;
+            case 'add an intern':
+                promptIntern();
+                break;
+            default:
+                finishTeam();
+        }
+    })
 };
 
 const promptEngineer = portfolioData => {
@@ -75,10 +104,6 @@ const promptEngineer = portfolioData => {
     ================
     `)
 
-    // if there's no 'team' array property, create one
-    if (!portfolioData.team) {
-        portfolioData.team = [];
-    }
     return inquirer
         .prompt([
             {
@@ -120,7 +145,100 @@ const promptEngineer = portfolioData => {
                     }
                 }
             },
-        ]);
+            {
+                type: 'input',
+                name: 'github',
+                message: "What is the Engineer's github username?",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter the engineer's github username!");
+                        return false;
+                    }
+                }
+            }
+        ])
+        .then(answers => {
+            // console.log(answers);
+            promptMenu();
+        });
+};
+
+const promptIntern = portfolioData => {
+    console.log(`
+    ==============
+    Add an Intern
+    ==============
+    `)
+
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: "What is the intern's name?",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter the name of the intern!');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: "What is the intern's employee ID?",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter the intern's employee ID!");
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: "What is the intern's email?",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter the intern's email!");
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'school',
+                message: "What is the intern's school?",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter the intern's school!");
+                        return false;
+                    }
+                }
+            }
+        ])
+        .then(answers => {
+            // console.log(answers);
+            promptMenu();
+        })
+};
+
+const finishTeam = portfolioData => {
+    // if there's no 'team' array property, create one
+    if (!portfolioData.team) {
+        portfolioData.team = [];
+    }
+
 }
 
-promptUser().then(answers => console.log(answers));
+promptManager().then(answers => console.log(answers));
