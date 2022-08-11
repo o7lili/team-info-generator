@@ -3,11 +3,8 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template.js');
-// const { writeFile, copyFile } = require('./utils/generate-site');
 const team = [];
 const fs = require('fs');
-
-
 
 const promptManager = () => {
     return inquirer
@@ -66,9 +63,7 @@ const promptManager = () => {
             }
             ])
             .then(managerData => {
-                console.log('line 74', managerData);
                 const manager = new Manager(managerData.name, managerData.id, managerData.email, managerData.officeNumber);
-                console.log('line 76', manager);
                 team.push(manager);
                 return promptMenu();
             })
@@ -105,10 +100,6 @@ const promptEngineer = () => {
     ================
     `)
 
-    // if there's no 'engineers' array property, create one
-    // if (!.engineers) {
-    //     .engineers = [];
-    // }
     return inquirer
         .prompt([
             {
@@ -165,9 +156,7 @@ const promptEngineer = () => {
             }
         ])
         .then(engineerData => {
-            console.log('line 173', engineerData);
             const engineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, engineerData.github);
-            console.log('line 175', engineer);
             team.push(engineer);
             return promptMenu();
         });
@@ -180,10 +169,6 @@ const promptIntern = () => {
     ==============
     `)
 
-    // if no 'interns' array property, create one
-    // if (!.interns) {
-    //     .interns = [];
-    // }
     return inquirer
         .prompt([
             {
@@ -240,9 +225,7 @@ const promptIntern = () => {
             }
         ])
         .then(internData => {
-            console.log('line 248', internData);
             const intern = new Intern(internData.name, internData.id, internData.email, internData.school);
-            console.log('line 250', intern);
             team.push(intern);
             return promptMenu();
         })
@@ -253,32 +236,17 @@ const finishTeam = () => {
     ==============
     Finished Team
     ==============
+
+    Go checkout TeamProfiles.html for the completed Team Profile!
     `)
-    console.log('team, line 257', team);
     
-    fs.writeFile('./TeamProfiles.html', generatePage(team), err => {
+    fs.writeFile('./dist/TeamProfiles.html', generatePage(team), err => {
         if (err) throw err;
-    
-    //     console.log('Team Portfolio complete! Check out TeamProfiles.html to see the output!');
-    });
+        });
     
 }
 
 promptManager()
-    // .then(promptMenu)
-    // .then( => {
-    //     return generatePage();
-    // })
-    // .then(pageHTML => {
-    //     return writeFile(pageHTML);
-    // })
-    // .then(writeFileResponse => {
-    //     console.log(writeFileResponse);
-    //     return copyFile();
-    // })
-    // .then(copyFileResponse => {
-    //     console.log(copyFileResponse);
-    // })
     .catch(err => {
         console.log(err);
     });
